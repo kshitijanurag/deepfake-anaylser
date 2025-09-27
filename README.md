@@ -5,6 +5,9 @@ This project implements a robust deep learning solution to combat the growing th
 
 This submission was created for the AIGNITION competition.
 
+# Deployment on Vercel
+You can easily deploy the Deepfake Analyser frontend on Vercel at https://deepfake-anaylser-r4pw3hyr9-kshitij-anurag-s-projects.vercel.app/. The backend model will be hosted separately.
+
 ## 🚀 Key Features
 - **Full Stack Deployment:** Integrated deep learning model with a dedicated web interface.
 - **High Accuracy:** Achieves superior performance in binary classification of real and fake face images.
