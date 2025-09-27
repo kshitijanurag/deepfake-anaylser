@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Deepfake Detector</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600;700&family=Poppins:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1 class="brand">Deepfake<span> Detector</span></h1>
+    </header>
+
+    <main class="container">
+      <section class="intro-card glass">
+        <h2 class="display">Detect Image Manipulations</h2>
+        <p class="lead">
+          Upload images and see if they are authentic or AI generated
+        </p>
+      </section>
+
+      <section class="upload-section">
+        <div class="upload-pane glass">
+          <h2 class="section-title">Upload Images</h2>
+          <p class="muted">Supported image types: JPG, JPEG, PNG and WEBP</p>
+
+          <div class="controls">
+            <div id="dropArea" class="upload-box">
+              <input
+                id="fileInput"
+                type="file"
+                accept=".jpg,.jpeg,.png,.webp"
+                multiple
+                hidden
+              />
+              <button id="selectBtn" class="btn primary">Select Images</button>
+              <button id="clearBtn" class="btn ghost">Clear</button>
+            </div>
+          </div>
+
+          <div id="fileGrid" class="file-grid"></div>
+
+          <div id="progressWrapper" class="progress-wrap hidden">
+            <div class="progress-bar-outer">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <div class="progress-meta">
+              <div id="progressText" class="progress-text"></div>
+              <div id="progressPercent" class="progress-percent"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="results" class="results-section hidden">
+        <h2 class="results-title">Detection Results</h2>
+        <div id="resultsList" class="results-list"></div>
+        <div class="results-actions">
+          <button id="rerunBtn" class="btn primary">Analyze Again</button>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
