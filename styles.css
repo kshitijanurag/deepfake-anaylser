@@ -39,11 +39,13 @@ body {
   background: var(--white);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
+
 .brand {
   font-family: "DM Serif Display", serif;
   font-size: 2rem;
   color: var(--primary);
 }
+
 .brand span {
   color: var(--secondary);
 }
@@ -304,6 +306,7 @@ body {
     opacity 0.4s,
     transform 0.4s;
 }
+
 .toast.show {
   opacity: 1;
   transform: translateY(0);

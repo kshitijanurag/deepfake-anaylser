@@ -13,6 +13,7 @@ const toast = document.getElementById("toast");
 
 let activeObjectURLs = [];
 let uploadedFiles = [];
+const errorToastColor = "#ff0000";
 
 const defaultText = selectBtn.textContent;
 
@@ -69,7 +70,10 @@ function handleFiles(input) {
   clearResults();
 
   if (files.length === 0) {
-    showToast("❌ Please upload valid images (JPG, JPEG, PNG and WEBP only)");
+    showToast({
+      message: "❌ Please upload valid images (JPG, JPEG, PNG and WEBP only)",
+      color: errorToastColor,
+    });
     return;
   }
 
@@ -106,10 +110,10 @@ function startUpload(files) {
 
   const formData = new FormData();
   for (let i = 0; i < files.length; i++) {
-    formData.append("files", files[i]); // must match FastAPI parameter
+    formData.append("files", files[i]);
   }
 
-  progressText.textContent = `Uploading ${files.length} file(s)...`;
+  progressText.textContent = `Uploading ${files.length} file${files.length > 1 ? "s" : ""}...`;
 
   fetch("https://kshitijanurag-deepfake-backend.hf.space/predict", {
     method: "POST",
@@ -120,22 +124,29 @@ function startUpload(files) {
       progressFill.classList.add("complete");
       progressFill.style.width = "100%";
       progressPercent.textContent = "100%";
-      progressText.textContent = `Uploaded ${files.length}/${files.length} files ✅`;
-      showToast("✅ All files uploaded successfully!");
+      progressText.textContent = `✅ Uploaded ${files.length}/${files.length} file${files.length > 1 ? "s" : ""}`;
+      showToast({ message: "✅ All files uploaded successfully" });
       showResultsFromAPI(data.results, files);
     })
     .catch((err) => {
       console.error(err);
-      showToast("❌ Upload failed: " + err.message);
+      showToast({
+        message: "❌ Upload failed: " + err.message,
+        color: errorToastColor,
+      });
     });
 }
 
 const analyseAgainBtn = document.getElementById("rerunBtn");
 analyseAgainBtn.addEventListener("click", () => {
   if (!uploadedFiles.length) {
-    showToast("❌ No files to analyse. Please select files first!");
+    showToast({
+      message: "❌ No files to analyse, please select files first.",
+      color: errorToastColor,
+    });
     return;
   }
+
   clearResults();
   startUpload(uploadedFiles);
 });
@@ -151,7 +162,7 @@ function showResultsFromAPI(resultsArray, files) {
     const preview = document.createElement("div");
     preview.className = "result-preview";
     const img = document.createElement("img");
-    img.src = URL.createObjectURL(files[idx]); // use original File for preview
+    img.src = URL.createObjectURL(files[idx]);
     preview.appendChild(img);
 
     const status = document.createElement("div");
@@ -190,10 +201,15 @@ function showResultsFromAPI(resultsArray, files) {
 }
 
 function clearAll() {
+  if (!uploadedFiles.length) {
+    showToast({ message: "❌ No files to clear" });
+    return;
+  }
+
   fileInput.value = "";
   clearGrid();
   clearResults();
-  showToast("Cleared all files");
+  showToast({ message: "Cleared all files" });
 }
 
 function clearGrid() {
@@ -211,8 +227,10 @@ function clearResults() {
   resultsList.innerHTML = "";
 }
 
-function showToast(msg) {
-  toast.textContent = msg;
+function showToast({ message, color = "#6c63ff" }) {
+  toast.textContent = message;
+  toast.style.background = color;
+
   toast.classList.add("show");
   setTimeout(() => toast.classList.remove("show"), 3000);
 }
